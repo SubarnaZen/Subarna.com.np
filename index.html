@@ -413,7 +413,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
       </button>
       <button class="ab-btn ab-btn-publish" id="ab-publish-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
-        <span id="ab-publish-label">Publish</span>
+        <span id="ab-publish-label">Download</span>
       </button>
       <button class="ab-btn ab-btn-settings" id="ab-settings-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -460,7 +460,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <div class="tb-right">
     <div class="clock-pill">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-      <span id="el-clock">4:56 AM</span>
+      <span id="el-clock">3:55 AM</span>
     </div>
     <button class="ico-btn" id="btn-dark" title="Toggle dark mode">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path><circle cx="19" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="22" cy="9" r=".7" fill="currentColor" stroke="none"></circle><circle cx="17" cy="2" r=".7" fill="currentColor" stroke="none"></circle></svg>
@@ -500,8 +500,8 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 
   <!-- HOME -->
   <div class="page-sec active" id="section-home">
-    <h1 class="h-title"><span id="el-h1a" contenteditable="false">Exploring Knowledge, Sharing</span><em id="el-h1em" contenteditable="false">Insights</em><span id="el-h1b" contenteditable="false">.</span></h1>
-    <p class="h-sub" id="el-sub" contenteditable="false">Floating in the Quantum World ❤️ Physics + Physique = Life ❄️ ✨</p>
+    <h1 class="h-title"><span id="el-h1a" contenteditable="false">Exploring Knowledge, Sharing </span><em id="el-h1em" contenteditable="false">Insights</em><span id="el-h1b" contenteditable="false">.</span></h1>
+    <p class="h-sub" id="el-sub" contenteditable="false">Floating in the Quantum World ❤️ Physics + Physique = Life ❄️</p>
     <p class="h-body" id="el-body" contenteditable="false">Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..</p>
     <div class="h-bar" id="el-bar" contenteditable="false">Learning and understanding the universe through curiosity, experiments, and theoretical ideas.</div>
     <div class="stats-row">
@@ -539,7 +539,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
     </div>
     <!-- Folder view -->
     <div id="gallery-folders-view">
-      <div class="folder-grid" id="folder-grid"></div>
+      <div class="folder-grid" id="folder-grid"><div class="folder-card"><div class="folder-icon">🏔</div><div class="folder-name">Nepal</div><div class="folder-count">0 photos</div><button class="folder-del">✕</button></div><div class="folder-card"><div class="folder-icon">💻</div><div class="folder-name">Projects</div><div class="folder-count">0 photos</div><button class="folder-del">✕</button></div></div>
       <button class="add-row-btn" id="btn-add-folder">+ New folder</button>
     </div>
     <!-- Photo view -->
@@ -687,7 +687,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 </div>
 
 <button class="edit-fab" id="edit-fab" title="Save changes">✓</button>
-<div class="toast show" id="toast">Saving &amp; publishing...</div>
+<div class="toast" id="toast">Welcome back! 👋</div>
 
 <script>
 // ═══ ICONS ═══
@@ -708,7 +708,7 @@ const IC={
 const ic=n=>IC[n]||IC.page;
 
 // ═══ DEFAULT STATE ═══
-const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️ ✨","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
+const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing ","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
 
 function loadState(){try{const r=localStorage.getItem('sb6');return r?Object.assign({},D,JSON.parse(r)):{...D};}catch(e){return{...D};}}
 function save(){localStorage.setItem('sb6',JSON.stringify(state));}
@@ -1053,8 +1053,8 @@ document.getElementById('status-chip').addEventListener('click',()=>{
 });
 
 // ═══ PASSWORD — stored in file, works on ALL devices ═══
-// To change password: Settings → Change password → downloads new index.html → upload to GitHub
-const PW_HASH='c55524b475e2e481bb4b9855d714558df45dacdef8db93335b7f8db3b53bc12f'; // = subarna123
+// To change password: Settings → Change password → enter current + new → Save (auto-publishes to GitHub)
+const PW_HASH='daa2492240d5645432286af652bc2751acbd78780e55d1f1e6d65099bfd8f7cc'; // = Quantum@321
 const RECOVERY_HASH='9338523016d1af44c31b7c21bc2cfc3c3f7ab03f5c7d7e81ee83bee832a9137a'; // = recover-subarna
 let loggedIn=false;
 
@@ -1577,19 +1577,81 @@ document.getElementById('set-change-pw').addEventListener('click',async()=>{
   if(nw!==con){toast('Passwords do not match ⚠');return;}
   if(!await verifyPw(cur)){toast('Current password wrong ⚠');return;}
   const newHash=await hashPw(nw);
-  // Bake new hash into HTML and download — upload to GitHub to apply on all devices
-  const html=document.documentElement.outerHTML;
-  const updated=html
-    .replace(/const PW_HASH='[a-f0-9]{64}'/,`const PW_HASH='${newHash}'`);
-  const blob=new Blob([updated],{type:'text/html;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='index.html';
-  a.click();
-  document.getElementById('set-pw-cur').value='';
-  document.getElementById('set-pw-new').value='';
-  document.getElementById('set-pw-con').value='';
-  toast('📥 index.html downloaded — upload to GitHub to apply on all devices');
+  // Bake new hash directly into the page's source (in-memory)
+  // Then publish to GitHub if configured, otherwise download
+  // We use a custom publish path because we need to override PW_HASH in the baked HTML
+  const g=JSON.parse(localStorage.getItem('sb_gh')||'{}');
+  const btn=document.getElementById('set-change-pw');
+  if(g.token&&g.repo){
+    btn.disabled=true; btn.textContent='Publishing...';
+    try{
+      if(editMode)collectEdits();
+      // Bake current state into HTML, then replace PW_HASH in the baked output
+      let htmlContent=bakeStateIntoHTML();
+      htmlContent=htmlContent.replace(/const PW_HASH='[a-f0-9]{64}'/,`const PW_HASH='${newHash}'`);
+      const branch=g.branch||'main';
+      // Get current SHA
+      const getRes=await fetch(
+        `https://api.github.com/repos/${g.repo}/contents/index.html?ref=${branch}`,
+        {headers:{Authorization:`token ${g.token}`,Accept:'application/vnd.github.v3+json'}}
+      );
+      if(!getRes.ok){
+        btn.disabled=false; btn.textContent='Change password';
+        toast('❌ Failed: '+getRes.status+' — check GitHub settings');
+        return;
+      }
+      const fileData=await getRes.json();
+      const sha=fileData.sha;
+      const encoded=btoa(unescape(encodeURIComponent(htmlContent)));
+      const putRes=await fetch(
+        `https://api.github.com/repos/${g.repo}/contents/index.html`,
+        {
+          method:'PUT',
+          headers:{
+            Authorization:`token ${g.token}`,
+            Accept:'application/vnd.github.v3+json',
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            message:`Change admin password — ${new Date().toLocaleString()}`,
+            content:encoded,
+            sha:sha,
+            branch:branch
+          })
+        }
+      );
+      btn.disabled=false; btn.textContent='Change password';
+      if(putRes.ok){
+        // Update the in-memory hash so further logins work without page reload
+        // (PW_HASH is const, but we can override the global via window)
+        window.PW_HASH=newHash;
+        document.getElementById('set-pw-cur').value='';
+        document.getElementById('set-pw-new').value='';
+        document.getElementById('set-pw-con').value='';
+        toast('✓ Password changed & published — use new password on all devices');
+      }else{
+        const err=await putRes.json();
+        toast('❌ Publish failed: '+(err.message||putRes.status));
+      }
+    }catch(e){
+      btn.disabled=false; btn.textContent='Change password';
+      toast('❌ Network error — check connection');
+      console.error(e);
+    }
+  }else{
+    // No GitHub — fall back to download
+    const html=document.documentElement.outerHTML;
+    const updated=html.replace(/const PW_HASH='[a-f0-9]{64}'/,`const PW_HASH='${newHash}'`);
+    const blob=new Blob([updated],{type:'text/html;charset=utf-8'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='index.html';
+    a.click();
+    document.getElementById('set-pw-cur').value='';
+    document.getElementById('set-pw-new').value='';
+    document.getElementById('set-pw-con').value='';
+    toast('📥 index.html downloaded — upload to GitHub to apply on all devices');
+  }
 });
 
 // ═══ GITHUB PUBLISH ═══
