@@ -165,6 +165,12 @@ body.edit-mode .cx-btn{display:block}
 .cc{display:flex;align-items:center;gap:13px;padding:13px 15px;background:var(--card);border-radius:11px;text-decoration:none;color:var(--text);transition:all .14s;position:relative;border:1px solid transparent}
 .cc:hover{border-color:var(--border);background:var(--nav-hover);transform:translateY(-1px)}
 .cl{font-size:13px;font-weight:600}.cv{font-size:11.5px;color:var(--text2);margin-top:1px}
+.site-row{margin-bottom:9px}
+.site-row .cc{padding-right:60px}
+.site-row .se-btn,.site-row .sd-btn{position:absolute;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);width:24px;height:24px;border-radius:6px;display:none;align-items:center;justify-content:center;font-size:11px;cursor:pointer;color:var(--text2)}
+.site-row .sd-btn{right:8px;background:rgba(220,50,50,.12);color:#dc2626;border-color:rgba(220,50,50,.2)}
+.site-row .se-btn{right:38px;background:rgba(13,148,136,.12);color:var(--teal);border-color:rgba(13,148,136,.2)}
+body.edit-mode .site-row .se-btn,body.edit-mode .site-row .sd-btn{display:flex}
 
 /* ── GALLERY ── */
 .gallery-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
@@ -555,6 +561,14 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
     </div>
   </div>
 
+  <!-- SITES -->
+  <div class="page-sec" id="section-sites">
+    <h2 class="gen-title">Sites</h2>
+    <p style="font-size:13.5px;color:var(--text2);margin-bottom:22px">Useful websites & profiles I contribute to or reference.</p>
+    <div class="sites-list" id="sites-list"></div>
+    <button class="add-row-btn" id="btn-add-site" style="margin-top:14px">+ Add site</button>
+  </div>
+
   <!-- ABOUT -->
   <div class="page-sec" id="section-about">
     <h2 class="gen-title">About</h2>
@@ -710,7 +724,7 @@ const IC={
 const ic=n=>IC[n]||IC.page;
 
 // ═══ DEFAULT STATE ═══
-const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing ","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/SubarnaZen"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/subarnazen"},{"id":"tw","label":"Twitter","icon":"twitter","url":"https://x.com/subarnazen"},{"id":"ig","label":"Instagram","icon":"instagram","url":"https://instagram.com/subarnazen"},{"id":"fb","label":"Facebook","icon":"facebook","url":"https://facebook.com/subarnazen"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
+const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing ","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"sites","label":"Sites","section":"sites","icon":"globe"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/SubarnaZen"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/subarnazen"},{"id":"tw","label":"Twitter","icon":"twitter","url":"https://x.com/subarnazen"},{"id":"ig","label":"Instagram","icon":"instagram","url":"https://instagram.com/subarnazen"},{"id":"fb","label":"Facebook","icon":"facebook","url":"https://facebook.com/subarnazen"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"sites":[{"id":"s1","label":"Google Scholar","url":"https://scholar.google.com/","desc":"My academic publications & citations"},{"id":"s2","label":"ResearchGate","url":"https://www.researchgate.net/","desc":"My research profile & papers"}],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
 
 function loadState(){try{const r=localStorage.getItem('sb6');return r?Object.assign({},D,JSON.parse(r)):{...D};}catch(e){return{...D};}}
 function save(){localStorage.setItem('sb6',JSON.stringify(state));}
@@ -798,7 +812,7 @@ function render(){
   const sc=document.getElementById('status-chip');
   sc.className='status-chip s-'+state.statusType;
   sc.innerHTML=`<span class="sdot"></span><span>${state.statusLabel}</span>`;
-  renderNav();renderLinks();renderProjects();renderSkills();renderFunFacts();renderContacts();renderGalleryFolders();renderCustomSections();
+  renderNav();renderLinks();renderProjects();renderSkills();renderFunFacts();renderContacts();renderSites();renderGalleryFolders();renderCustomSections();
   syncSettings();
 }
 function st(id,v){const e=document.getElementById(id);if(e)e.textContent=v||'';}
@@ -806,7 +820,7 @@ function st(id,v){const e=document.getElementById(id);if(e)e.textContent=v||'';}
 // ── NAV ──
 function renderNav(){
   const g=document.getElementById('nav-grid');g.innerHTML='';
-  const CORE=['home','projects','gallery','about','contact'];
+  const CORE=['home','projects','gallery','sites','about','contact'];
   const visible=[...state.navItems];
   if(editMode)visible.push({id:'settings',label:'Settings',section:'settings',icon:'settings'});
   visible.forEach((item,i)=>{
@@ -884,6 +898,39 @@ function renderContacts(){
     const w=document.createElement('div');w.style.position='relative';
     w.innerHTML=`<a class="cc" href="${ea(c.url)}">${ic('mail')}<div><div class="cl">${c.label}</div><div class="cv">${c.value}</div></div><button class="cx-btn">✕</button></a>`;
     w.querySelector('.cx-btn').addEventListener('click',e=>{e.preventDefault();state.contacts=state.contacts.filter(x=>x.id!==c.id);save();renderContacts();});
+    l.appendChild(w);
+  });
+}
+
+// ── SITES (external website links) ──
+function renderSites(){
+  const l=document.getElementById('sites-list');if(!l)return;
+  l.innerHTML='';
+  (state.sites||[]).forEach(s=>{
+    const w=document.createElement('div');w.className='site-row';w.style.position='relative';
+    // Extract domain for display
+    let domain='';
+    try{domain=new URL(s.url).hostname.replace(/^www\./,'');}catch(e){domain=s.url;}
+    w.innerHTML=`
+      <a class="cc" href="${ea(s.url)}" target="_blank" rel="noopener">
+        ${ic('globe')}
+        <div>
+          <div class="cl">${esc(s.label)}</div>
+          <div class="cv">${esc(domain)}</div>
+          ${s.desc?`<div style="font-size:11.5px;color:var(--text3);margin-top:3px">${esc(s.desc)}</div>`:''}
+        </div>
+      </a>
+      <button class="cx-btn se-btn" title="Edit">✎</button>
+      <button class="cx-btn sd-btn" title="Delete">✕</button>`;
+    w.querySelector('.sd-btn').addEventListener('click',e=>{
+      e.preventDefault();
+      state.sites=state.sites.filter(x=>x.id!==s.id);
+      save();renderSites();
+    });
+    w.querySelector('.se-btn').addEventListener('click',e=>{
+      e.preventDefault();
+      openModal('editsite',s.id);
+    });
     l.appendChild(w);
   });
 }
@@ -1488,6 +1535,28 @@ function openModal(type,id){
       save();renderContacts();
     };
   }
+  else if(type==='addsite'||type==='editsite'){
+    const isE=type==='editsite';
+    const s=isE?(state.sites||[]).find(x=>x.id===id):null;
+    title.textContent=isE?'Edit site':'Add site';
+    body.innerHTML=`
+      <div class="form-group"><label class="form-lbl">Site name</label><input class="form-inp" id="mi-lbl" value="${isE?esc(s.label):''}" placeholder="Google Scholar, ResearchGate..."></div>
+      <div class="form-group"><label class="form-lbl">URL</label><input class="form-inp" id="mi-url" type="url" value="${isE?esc(s.url):''}" placeholder="https://..."></div>
+      <div class="form-group"><label class="form-lbl">Description (optional)</label><input class="form-inp" id="mi-desc" value="${isE?esc(s.desc||''):''}" placeholder="What this site is for..."></div>`;
+    mCb=()=>{
+      const lbl=document.getElementById('mi-lbl').value.trim();if(!lbl)return false;
+      const url=document.getElementById('mi-url').value.trim();if(!url||!/^https?:\/\//.test(url))return false;
+      const desc=document.getElementById('mi-desc').value.trim();
+      if(isE){
+        const x=(state.sites||[]).find(z=>z.id===id);
+        if(x){x.label=lbl;x.url=url;x.desc=desc;}
+      }else{
+        if(!state.sites)state.sites=[];
+        state.sites.push({id:'s'+Date.now(),label:lbl,url,desc});
+      }
+      save();renderSites();
+    };
+  }
   else if(type==='addfact'){
     title.textContent='Add fact card';
     body.innerHTML=`
@@ -1534,6 +1603,7 @@ document.getElementById('btn-add-link').addEventListener('click',()=>openModal('
 document.getElementById('btn-add-proj-h').addEventListener('click',()=>openModal('addproj'));
 document.getElementById('btn-add-proj-p').addEventListener('click',()=>openModal('addproj'));
 document.getElementById('btn-add-contact').addEventListener('click',()=>openModal('addcontact'));
+document.getElementById('btn-add-site').addEventListener('click',()=>openModal('addsite'));
 document.getElementById('btn-add-fact').addEventListener('click',()=>openModal('addfact'));
 document.getElementById('btn-add-skill').addEventListener('click',()=>openModal('addskill'));
 document.getElementById('btn-add-folder').addEventListener('click',()=>openModal('addfolder'));
