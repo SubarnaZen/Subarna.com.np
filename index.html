@@ -413,7 +413,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
       </button>
       <button class="ab-btn ab-btn-publish" id="ab-publish-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
-        <span id="ab-publish-label">Download</span>
+        <span id="ab-publish-label">Publish</span>
       </button>
       <button class="ab-btn ab-btn-settings" id="ab-settings-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -460,7 +460,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <div class="tb-right">
     <div class="clock-pill">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-      <span id="el-clock">3:55 AM</span>
+      <span id="el-clock">4:56 AM</span>
     </div>
     <button class="ico-btn" id="btn-dark" title="Toggle dark mode">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path><circle cx="19" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="22" cy="9" r=".7" fill="currentColor" stroke="none"></circle><circle cx="17" cy="2" r=".7" fill="currentColor" stroke="none"></circle></svg>
@@ -500,8 +500,8 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 
   <!-- HOME -->
   <div class="page-sec active" id="section-home">
-    <h1 class="h-title"><span id="el-h1a" contenteditable="false">Exploring Knowledge, Sharing </span><em id="el-h1em" contenteditable="false">Insights</em><span id="el-h1b" contenteditable="false">.</span></h1>
-    <p class="h-sub" id="el-sub" contenteditable="false">Floating in the Quantum World ❤️ Physics + Physique = Life ❄️</p>
+    <h1 class="h-title"><span id="el-h1a" contenteditable="false">Exploring Knowledge, Sharing</span><em id="el-h1em" contenteditable="false">Insights</em><span id="el-h1b" contenteditable="false">.</span></h1>
+    <p class="h-sub" id="el-sub" contenteditable="false">Floating in the Quantum World ❤️ Physics + Physique = Life ❄️ ✨</p>
     <p class="h-body" id="el-body" contenteditable="false">Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..</p>
     <div class="h-bar" id="el-bar" contenteditable="false">Learning and understanding the universe through curiosity, experiments, and theoretical ideas.</div>
     <div class="stats-row">
@@ -539,7 +539,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
     </div>
     <!-- Folder view -->
     <div id="gallery-folders-view">
-      <div class="folder-grid" id="folder-grid"><div class="folder-card"><div class="folder-icon">🏔</div><div class="folder-name">Nepal</div><div class="folder-count">0 photos</div><button class="folder-del">✕</button></div><div class="folder-card"><div class="folder-icon">💻</div><div class="folder-name">Projects</div><div class="folder-count">0 photos</div><button class="folder-del">✕</button></div></div>
+      <div class="folder-grid" id="folder-grid"></div>
       <button class="add-row-btn" id="btn-add-folder">+ New folder</button>
     </div>
     <!-- Photo view -->
@@ -687,7 +687,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 </div>
 
 <button class="edit-fab" id="edit-fab" title="Save changes">✓</button>
-<div class="toast" id="toast">Welcome back! 👋</div>
+<div class="toast show" id="toast">Saving &amp; publishing...</div>
 
 <script>
 // ═══ ICONS ═══
@@ -708,7 +708,7 @@ const IC={
 const ic=n=>IC[n]||IC.page;
 
 // ═══ DEFAULT STATE ═══
-const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing ","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
+const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️ ✨","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
 
 function loadState(){try{const r=localStorage.getItem('sb6');return r?Object.assign({},D,JSON.parse(r)):{...D};}catch(e){return{...D};}}
 function save(){localStorage.setItem('sb6',JSON.stringify(state));}
