@@ -67,6 +67,8 @@ body.dark .clock-pill{background:rgba(255,255,255,.04)}
 .nav-btn.full{grid-column:1/-1}
 .nav-x{position:absolute;top:4px;right:4px;width:15px;height:15px;border-radius:3px;background:rgba(220,50,50,.15);color:#dc2626;border:none;font-size:8px;cursor:pointer;display:none;align-items:center;justify-content:center;font-weight:700}
 body.edit-mode .nav-x{display:flex}
+.nav-e{position:absolute;top:4px;right:22px;width:15px;height:15px;border-radius:3px;background:rgba(13,148,136,.15);color:var(--teal);border:none;font-size:9px;cursor:pointer;display:none;align-items:center;justify-content:center;font-weight:700;line-height:1}
+body.edit-mode .nav-e{display:flex}
 .add-nav-wrap{display:none;grid-column:1/-1}
 body.edit-mode .add-nav-wrap{display:grid}
 .add-nav-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px;border-radius:10px;border:1.5px dashed var(--border);background:transparent;color:var(--text3);font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .14s}
@@ -335,6 +337,8 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 #photo-input,#gallery-upload-input,#set-import-file{display:none}
 </style>
+<!-- EmailJS SDK for password recovery by email -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body >
 <input type="file" id="photo-input" accept="image/*">
@@ -344,7 +348,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 <!-- FULL-PAGE LOGIN SCREEN -->
 <div class="login-screen" id="login-screen">
   <div class="login-card">
-    <div class="login-avatar"><img id="login-av-img" src="data:image/png;base64,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" alt=""></div>
+    <div class="login-avatar"><img id="login-av-img" src="data:image/png;base64,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" alt=""></div>
     <div class="login-site-name" id="login-site-name">subarna.com.np</div>
     <div class="login-title">Welcome back 👋</div>
     <div class="login-sub">Sign in to manage your site</div>
@@ -362,14 +366,32 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <!-- Forgot password panel (inside login card) -->
   <div class="forgot-card" id="forgot-card">
     <div style="font-size:22px;margin-bottom:10px">🔑</div>
-    <div class="login-title" style="font-size:18px">Recovery key</div>
-    <div class="login-sub">Enter your recovery key to log in.<br>Default key: <code style="background:var(--card);padding:2px 7px;border-radius:5px;font-size:12px;color:var(--teal)">recover-subarna</code></div>
-    <div class="login-field">
-      <input class="login-inp" type="text" id="recovery-inp" placeholder="Enter recovery key" autocomplete="off">
+    <div class="login-title" style="font-size:18px">Forgot password?</div>
+    <div class="login-sub">Choose how to recover access:</div>
+
+    <!-- Email recovery -->
+    <div style="background:var(--card);border-radius:10px;padding:13px;margin-bottom:11px;text-align:left">
+      <div style="font-size:13px;font-weight:600;margin-bottom:7px">📧 Email me my password</div>
+      <div class="login-field" style="margin-bottom:8px">
+        <input class="login-inp" type="email" id="email-rec-inp" placeholder="Your recovery email" autocomplete="off">
+      </div>
+      <div class="login-err" id="email-rec-err">Email doesn't match the configured recovery address</div>
+      <button class="login-submit" id="email-rec-submit" style="width:100%">Send password to my email →</button>
+      <div id="email-rec-status" style="font-size:11.5px;margin-top:7px;color:var(--text3);text-align:center"></div>
     </div>
-    <div class="login-err" id="recovery-err">Recovery key incorrect</div>
-    <button class="login-submit" id="recovery-submit">Unlock with key →</button>
-    <button class="login-back" id="recovery-back">← Back to login</button>
+
+    <!-- Recovery key -->
+    <div style="background:var(--card);border-radius:10px;padding:13px;text-align:left">
+      <div style="font-size:13px;font-weight:600;margin-bottom:7px">🗝 Use recovery key</div>
+      <div class="login-sub" style="font-size:12px;margin-bottom:7px">Default key: <code style="background:var(--bg);padding:2px 7px;border-radius:5px;font-size:12px;color:var(--teal)">recover-subarna</code></div>
+      <div class="login-field" style="margin-bottom:8px">
+        <input class="login-inp" type="text" id="recovery-inp" placeholder="Enter recovery key" autocomplete="off">
+      </div>
+      <div class="login-err" id="recovery-err">Recovery key incorrect</div>
+      <button class="login-submit" id="recovery-submit" style="width:100%">Unlock with key →</button>
+    </div>
+
+    <button class="login-back" id="recovery-back" style="margin-top:14px">← Back to login</button>
   </div>
 </div>
 
@@ -389,9 +411,9 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
         Save
       </button>
-      <button class="ab-btn ab-btn-publish" id="ab-publish-btn" disabled="">
+      <button class="ab-btn ab-btn-publish" id="ab-publish-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
-        <span id="ab-publish-label">Publishing...</span>
+        <span id="ab-publish-label">Download</span>
       </button>
       <button class="ab-btn ab-btn-settings" id="ab-settings-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -438,7 +460,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <div class="tb-right">
     <div class="clock-pill">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-      <span id="el-clock">9:42 AM</span>
+      <span id="el-clock">3:55 AM</span>
     </div>
     <button class="ico-btn" id="btn-dark" title="Toggle dark mode">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path><circle cx="19" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="22" cy="9" r=".7" fill="currentColor" stroke="none"></circle><circle cx="17" cy="2" r=".7" fill="currentColor" stroke="none"></circle></svg>
@@ -456,14 +478,14 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   </div>
   <div class="links-wrap">
     <div class="sec-lbl">Links</div>
-    <div id="links-list"><div style="display: flex; align-items: center;"><a class="link-a" href="https://github.com/SubarnaZen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"></path></svg><span>GitHub</span></a><button class="lx-btn">✕</button></div><div style="display: flex; align-items: center;"><a class="link-a" href="https://www.facebook.com/SubarnaZen/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span>Facebook</span></a><button class="lx-btn">✕</button></div><div style="display: flex; align-items: center;"><a class="link-a" href="https://x.com/subarnazen" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span>twitter.com</span></a><button class="lx-btn">✕</button></div><div style="display: flex; align-items: center;"><a class="link-a" href="https://www.linkedin.com/in/subarnazen/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span>Linkedin</span></a><button class="lx-btn">✕</button></div></div>
+    <div id="links-list"><div style="display: flex; align-items: center;"><a class="link-a" href="https://github.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"></path></svg><span>GitHub</span></a><button class="lx-btn">✕</button></div><div style="display: flex; align-items: center;"><a class="link-a" href="https://linkedin.com/in/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg><span>LinkedIn</span></a><button class="lx-btn">✕</button></div></div>
     <button class="add-link-btn" id="btn-add-link">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add link
     </button>
   </div>
   <div class="prof-footer">
     <div class="av-wrap" id="av-wrap">
-      <img class="av" id="el-av" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADKElEQVR4AbxWz0tUURT+3p1yoZU/NmERFGIIUQjVoihSiNxIRGsjhwmsFirWn5EySqSS0yhKi4KoaBUtjKCgX1htIogWUdKiUSJdSL7X9935wfNp43vhzOOed88595zvO3PemTdjEPKaGhraNjGS7BgfSY6NjyZfp0eSP6kvS6xOH/UxxSg2JCzWLSA9OrBfwH8q3DkPmCRwAh4OOkAddeUbq9NHO6EYxSpHufQVXQL4Z8D4cPKa45n3DEhQisby3L8Um1CuMPwHQV2BQR9UudoMB1dWHUZ1EENYwlwrdVUB6RsDx1n5NLItXSsnuo9YjmemhR1MXlGAqnSMuc8gPV9uG7rqhC0OP6rxGw5MGtnh4laSVedkOZC/CgXYYWGr8gcl28lhuXIEtgDbFg5Lzlf6jVyWk0y2AA5ID/Wyrjynyb214mVlz5LFxW2WK9zTtG0nuIdeR0+cxPmunoLIDp2cDbTchq/Olqwd/t6wtwm7Gxox++0rHj+6h8WF39aWPzwKIG7Dt11zlCTFbq2uRSwWQ3VNrUzcnUrh9q1hfP700dqhbw6ajedhT+iEQGBl1Ra0trUj6ifPw4hbv2Q1eUfYfebVC/yY/W7DN2+uwLHWNpxqP2vtKDcHqDFREvyxevbv3r6E6y5b9/b6HWg+fMTqUW4awvkoCf5YdWLy5nU7jMbEUFlZ5T9eV+cQzhvHwZd1IwMBare+gv6vnjqxuLgQiCxuitvAwwwiXmr//FwGjU377Hugfucu+w1QRyJBkds4wDT+43pwZxITo4MFef70SWQUcZvYknnITJdS7uWK23R0d/8is/4HcCvrSovbiNJz3EHt5ZQ8py0g3tX3gcPYX7YCPPRbThLaArij81LvVTh4I72kQg7LlSMpFCDbg6v/BRnpJZJMjqMAv6IAtcVz3TM8LUURGWGLg/iFtaIAeeOX+55xQFo29HGw7cIUtjj8sqoAHarKzq7eQxsymBw4YcU16AIPyJoF5GM0LKz8AO0UxaWEXYpNKVcYxZKKFqBEVd55sffCpiVTy1fnOfpSejz8JdOciMi1OtusM8UoVjnKpa/o+gsAAP//Mid94QAAAAZJREFUAwCADSwqsWnsfgAAAABJRU5ErkJggg==" alt="">
+      <img class="av" id="el-av" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEKElEQVR4AbxWf0zUZRj/PO9xBxwG0dS5GcgoAzZr6JbLWZluLZMhm0tyDkWGhoZjRLZ+/OGu+qtZcl4b3K3lXUE/xpolWrFs5LIZWZGj5uZGDlE3QH7d6d3BcXxfn/fLYIh3cl8G9+x93h/PPc/n8/m+977ffQVitB8cjkRPnX2rx2lv8NTb2931td2e+tqA22n3c+yq21n7N48NbufRQpfLZY4RFmK2xC/q6tI9ztojfWatn7NPcn4JCKuJKANEyQRYOZZJoDU8lhBEs0UGbqoaVYtZLKqApiabxe2srRmj0P8AHQJhEWI0FpMGrlG1vFuvKSxEsYgCGh2OVP9A2o8M9BETp0epnT1MSAfhqH8wrUlhRiq4R0BDnT1nzKxd4C3eFKlgLjF+kKKwRfvD7fo4d2b9XQK+dH24OCxwigg5MxPnYZ1LMnzy+HHHkulYUwLUyQ1JUzMBK6cnzO+cHhOj498qrkncKQEWLfg6QOuw0Ea0foJrgkgXoG8LyXcmQgvf8y6//Xn9kaWKSRdAo9r7BHpABeLihNRxmN9TXKLJ5UojkmVqEWffo7iFH4GNAFkQZ+Oblqi4BTTabJQ7IysbhS/tREl5Jbbv2ovnnt+CpKRkozBQ3ILfVPlGKoUQeOrpjbBYEvHn77/iWtcVPLwiGxtYhBEcPZeQLyDlMn0RY2dNWQTlHe0XcPnSv2g714rzZ89g4GZfjAjT0phbAGRIwO1bPijPezwfyzOzoOxK52X81XZOTQ06LWMBBms4vbXlFHzDw3h202a8vHsfVj+5DolzOQOMxQJkD4+G2tBgP86e+R5feZz4jbc/M+sRbCnabghjIln2CBAZErA8YwW27SiF1ZqiY9zo7sKl/y4i9cF0JCWrbxM9HFvH3AISF2HABgf4w8hkQsG2HfrW563KR07eKvi8QxgJBgwgcSpzCwjZwtOYWzDgR0vzN/AOD+GJNWuxdv0GvVadC31ipCP6TqTA+ouUGIUBU7fgp9Mn8JnrmO6nT3ytCzIAwakylPLQUKsorqjw8srDHtcmJbmLi20hobNqZhuPI+zxaiMmjB1WZLqAssrKHgnpUoF4uASO7T7whv7q1AUoUnPIdJhvRIeaL6hLtKUEtHcnOaYElFRV+RISRAH/cJ19YZqUnRYRLiyuqQlOEkwJUIGSfVXXSUMB74RPrefXZb9Jky/urDjUPx33LgHqh9JXqztoPCFbSpxX63lxKX+msDl3V2VN50y8ewSohNKDBweu9g4/w/O9fGB6eZxbk7KPH+SVrl7vCwozEkhEASrRZrNpe/ZXf6qZR1dK4AP+W26reCzON8qrasYtoUfLDlR/orCi1UUVMFlQXv7mrbL91W8tHROLJbStHG+UkO08djNJgD9oglLKayzwH441QkNRiKxLVI2q5dh92x0AAAD//xeCExEAAAAGSURBVAMATMp37UVd7okAAAAASUVORK5CYII=" alt="">
       <div class="av-ov" id="av-ov">📷</div>
     </div>
     <div>
@@ -478,16 +500,16 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 
   <!-- HOME -->
   <div class="page-sec active" id="section-home">
-    <h1 class="h-title"><span id="el-h1a" contenteditable="false">Exploring Knowledge, Sharing Insights</span><em id="el-h1em" contenteditable="false"></em><span id="el-h1b" contenteditable="false">.</span></h1>
-    <p class="h-sub" id="el-sub" contenteditable="false">Floating in the Quantum World ♥️Physics + Physique = Life ❄️</p>
-    <p class="h-body" id="el-body" contenteditable="false">Currently learning, building, and exploring the fascinating worlds of physics, research, and technology.Driven by curiosity today, guided by ambition for tomorrow..</p>
+    <h1 class="h-title"><span id="el-h1a" contenteditable="false">Exploring Knowledge, Sharing </span><em id="el-h1em" contenteditable="false">Insights</em><span id="el-h1b" contenteditable="false">.</span></h1>
+    <p class="h-sub" id="el-sub" contenteditable="false">Floating in the Quantum World ❤️ Physics + Physique = Life ❄️</p>
+    <p class="h-body" id="el-body" contenteditable="false">Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..</p>
     <div class="h-bar" id="el-bar" contenteditable="false">Learning and understanding the universe through curiosity, experiments, and theoretical ideas.</div>
     <div class="stats-row">
-      <span class="sn" id="el-s1n" contenteditable="false">2.5+</span><span id="el-s1l" contenteditable="false">Year partnership ex(X)😄</span>
+      <span class="sn" id="el-s1n" contenteditable="false">2.5+</span><span id="el-s1l" contenteditable="false">Year Partnership</span>
       <span class="sep">|</span>
-      <span class="sn" id="el-s2n" contenteditable="false">3 +</span><span id="el-s2l" contenteditable="false">years experience in Tech-field</span>
+      <span class="sn" id="el-s2n" contenteditable="false">3+</span><span id="el-s2l" contenteditable="false">Years Experience in Tech-Field</span>
       <span class="sep">|</span>
-      <span class="sn" id="el-s3n" contenteditable="false">∞</span><span id="el-s3l" contenteditable="false">pursuing goal</span>
+      <span class="sn" id="el-s3n" contenteditable="false">→</span><span id="el-s3l" contenteditable="false">Pursuing Goal</span>
     </div>
     <div style="margin-bottom:28px">
       <div class="sec-hd">Tech stack</div>
@@ -495,7 +517,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
       <button class="add-skill-btn" id="btn-add-skill"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add skill</button>
     </div>
     <div class="sec-hd">Personal projects</div>
-    <div class="proj-list" id="home-projs"><div class="proj-row"><div class="pdot"></div><div class="pmain"><div class="pnrow"><span class="pname">Quarkcode Technology</span><span class="badge bg2">Active</span></div><div class="pdesc">Buiding the ............</div></div><a class="parr" href="#" target="_blank" rel="noopener">↗</a><button class="pe-btn">Edit</button><button class="px-btn">✕</button></div></div>
+    <div class="proj-list" id="home-projs"><div class="proj-row"><div class="pdot"></div><div class="pmain"><div class="pnrow"><span class="pname">Quarkcode Technology</span><span class="badge bg2">Active</span></div><div class="pdesc">Building the........</div></div><a class="parr" href="#" target="_blank" rel="noopener">↗</a><button class="pe-btn">Edit</button><button class="px-btn">✕</button></div></div>
     <button class="add-row-btn" id="btn-add-proj-h">+ Add project</button>
   </div>
 
@@ -503,7 +525,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <div class="page-sec" id="section-projects">
     <h2 class="gen-title">Projects</h2>
     <p style="font-size:13.5px;color:var(--text2);margin-bottom:26px">Things I've built and shipped.</p>
-    <div class="proj-list" id="proj-projs"><div class="proj-row"><div class="pdot"></div><div class="pmain"><div class="pnrow"><span class="pname">Quarkcode Technology</span><span class="badge bg2">Active</span></div><div class="pdesc">Buiding the ............</div></div><a class="parr" href="#" target="_blank" rel="noopener">↗</a><button class="pe-btn">Edit</button><button class="px-btn">✕</button></div></div>
+    <div class="proj-list" id="proj-projs"><div class="proj-row"><div class="pdot"></div><div class="pmain"><div class="pnrow"><span class="pname">Quarkcode Technology</span><span class="badge bg2">Active</span></div><div class="pdesc">Building the........</div></div><a class="parr" href="#" target="_blank" rel="noopener">↗</a><button class="pe-btn">Edit</button><button class="px-btn">✕</button></div></div>
     <button class="add-row-btn" id="btn-add-proj-p">+ Add project</button>
   </div>
 
@@ -517,7 +539,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
     </div>
     <!-- Folder view -->
     <div id="gallery-folders-view">
-      <div class="folder-grid" id="folder-grid"><div class="folder-card"><div class="folder-icon">👽</div><div class="folder-name">👽👽</div><div class="folder-count">2 photos</div><button class="folder-del">✕</button></div></div>
+      <div class="folder-grid" id="folder-grid"><div class="folder-card"><div class="folder-icon">🏔</div><div class="folder-name">Nepal</div><div class="folder-count">0 photos</div><button class="folder-del">✕</button></div><div class="folder-card"><div class="folder-icon">💻</div><div class="folder-name">Projects</div><div class="folder-count">0 photos</div><button class="folder-del">✕</button></div></div>
       <button class="add-row-btn" id="btn-add-folder">+ New folder</button>
     </div>
     <!-- Photo view -->
@@ -539,9 +561,9 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
     <p style="font-size:13.5px;color:var(--text2);margin-bottom:22px">A little about me.</p>
     <div class="about-card">
       <h3>Who I am</h3>
-      <p id="el-about" contenteditable="false">I spend my time trying to understand the world, and the world spends its time confusing me back. Nepali, learning one mystery at a time.</p>
+      <p id="el-about" contenteditable="false">I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.</p>
     </div>
-    <div class="fun-facts" id="fun-facts"><div class="fact-card"><div class="fact-icon">🌏</div><div class="fact-title">Location</div><div class="fact-val" contenteditable="false">Kathmandu, Nepal</div><button class="cx-btn">✕</button></div><div class="fact-card"><div class="fact-icon">⚡</div><div class="fact-title">Availability</div><div class="fact-val" contenteditable="false">Open to projects</div><button class="cx-btn">✕</button></div><div class="fact-card"><div class="fact-icon">🎯</div><div class="fact-title">Focus</div><div class="fact-val" contenteditable="false">Building in public</div><button class="cx-btn">✕</button></div></div>
+    <div class="fun-facts" id="fun-facts"><div class="fact-card"><div class="fact-icon">🌏</div><div class="fact-title">Location</div><div class="fact-val" contenteditable="false">Kathmandu, Nepal</div><button class="cx-btn">✕</button></div><div class="fact-card"><div class="fact-icon">⚡</div><div class="fact-title">Availability</div><div class="fact-val" contenteditable="false">Open to projects</div><button class="cx-btn">✕</button></div><div class="fact-card"><div class="fact-icon">☕</div><div class="fact-title">Fuel</div><div class="fact-val" contenteditable="false">Coffee &amp; curiosity</div><button class="cx-btn">✕</button></div><div class="fact-card"><div class="fact-icon">🎯</div><div class="fact-title">Focus</div><div class="fact-val" contenteditable="false">Building in public</div><button class="cx-btn">✕</button></div></div>
     <button class="add-row-btn" id="btn-add-fact" style="margin-top:11px">+ Add fact card</button>
   </div>
 
@@ -549,7 +571,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <div class="page-sec" id="section-contact">
     <h2 class="gen-title">Contact</h2>
     <p style="font-size:13.5px;color:var(--text2);margin-bottom:22px">Let's connect.</p>
-    <div class="contact-list" id="el-contacts"><div style="position: relative;"><a class="cc" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,4 12,13 2,4"></polyline></svg><div><div class="cl">Subarnazen@gmail.com</div><div class="cv"></div></div><button class="cx-btn">✕</button></a></div></div>
+    <div class="contact-list" id="el-contacts"><div style="position: relative;"><a class="cc" href="mailto:hello@subarna.com.np"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,4 12,13 2,4"></polyline></svg><div><div class="cl">Email</div><div class="cv">hello@subarna.com.np</div></div><button class="cx-btn">✕</button></a></div></div>
     <button class="add-row-btn" id="btn-add-contact" style="margin-top:14px">+ Add contact</button>
   </div>
 
@@ -577,6 +599,39 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
         </div>
         <div class="btn-row"><button class="s-btn s-btn-p" id="set-change-pw">Change password</button></div>
       </div>
+      <div class="settings-block">
+        <div class="settings-blk-title">📧 Password Recovery (Email)</div>
+        <div style="background:var(--teal-bg);border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:12.5px;color:var(--teal-text);line-height:1.7">
+          When someone clicks <strong>Forgot password? → Email me</strong>, the password is sent to the email below via <strong>EmailJS</strong> (free, 200 emails/month). Configure at <code style="background:var(--card);padding:1px 5px;border-radius:3px">emailjs.com</code>.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:400px">
+          <div>
+            <label class="form-lbl">Recovery email (Gmail)</label>
+            <input class="form-inp" type="email" id="set-rec-email" placeholder="subarnazen@gmail.com">
+          </div>
+          <div>
+            <label class="form-lbl">EmailJS Service ID</label>
+            <input class="form-inp" id="set-ejs-svc" placeholder="service_xxxxxxx">
+          </div>
+          <div>
+            <label class="form-lbl">EmailJS Template ID</label>
+            <input class="form-inp" id="set-ejs-tpl" placeholder="template_xxxxxxx">
+          </div>
+          <div>
+            <label class="form-lbl">EmailJS Public Key</label>
+            <input class="form-inp" id="set-ejs-key" placeholder="xxxxxxxxxxxxxxxxxx">
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.6">
+          <strong>EmailJS template variables:</strong> <code style="background:var(--card);padding:1px 5px;border-radius:3px">{{to_email}}</code>, <code style="background:var(--card);padding:1px 5px;border-radius:3px">{{password}}</code>, <code style="background:var(--card);padding:1px 5px;border-radius:3px">{{site_name}}</code>. Template "To Email" field must be <code style="background:var(--card);padding:1px 5px;border-radius:3px">{{to_email}}</code>.
+        </div>
+        <div class="btn-row">
+          <button class="s-btn s-btn-p" id="set-save-rec">Save recovery settings</button>
+          <button class="s-btn s-btn-o" id="set-test-rec">Send test email</button>
+        </div>
+        <div id="rec-status" style="font-size:12px;margin-top:8px;display:none"></div>
+      </div>
+
       <div class="settings-block">
         <div class="settings-blk-title">Data</div>
         <div class="btn-row">
@@ -628,11 +683,11 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   </div>
 
   <!-- Custom pages here -->
-<div class="page-sec custsec" id="section-c1781754819677"><h2 class="gen-title" contenteditable="false">google scholer</h2><p class="gen-body" contenteditable="false">Write your content here...</p></div></div>
+</div>
 </div>
 
 <button class="edit-fab" id="edit-fab" title="Save changes">✓</button>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">Welcome back! 👋</div>
 
 <script>
 // ═══ ICONS ═══
@@ -653,7 +708,7 @@ const IC={
 const ic=n=>IC[n]||IC.page;
 
 // ═══ DEFAULT STATE ═══
-const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing Insights","h1em":"","h1b":".","sub":"Floating in the Quantum World ♥️Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology.Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year partnership ex(X)😄","s2n":"3 +","s2l":"years experience in Tech-field","s3n":"∞","s3l":"pursuing goal","aboutBody":"I spend my time trying to understand the world, and the world spends its time confusing me back. Nepali, learning one mystery at a time.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"l1780022108442","label":"GitHub","icon":"github","url":"https://github.com/SubarnaZen"},{"id":"l1780022177681","label":"Facebook","icon":"globe","url":"https://www.facebook.com/SubarnaZen/"},{"id":"l1780033977369","label":"twitter.com","icon":"globe","url":"https://x.com/subarnazen"},{"id":"l1780034072136","label":"Linkedin","icon":"globe","url":"https://www.linkedin.com/in/subarnazen/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Buiding the ............","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1780021783371","label":"Subarnazen@gmail.com","value":"","url":"#"}],"gallery":[{"id":"gf1780021858866","name":"👽👽","emoji":"👽"}],"customSections":[{"id":"c1781754819677","title":"google scholer","body":"Write your content here..."}]}/*STATE_END*/;
+const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing ","h1em":"Insights","h1b":".","sub":"Floating in the Quantum World ❤️ Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year Partnership","s2n":"3+","s2l":"Years Experience in Tech-Field","s3n":"→","s3l":"Pursuing Goal","aboutBody":"I'm a curious learner and builder passionate about exploring the fascinating worlds of physics, research, and technology. Driven by curiosity today, guided by ambition for tomorrow.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"gh","label":"GitHub","icon":"github","url":"https://github.com/"},{"id":"li","label":"LinkedIn","icon":"linkedin","url":"https://linkedin.com/in/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Building the........","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f3","icon":"☕","title":"Fuel","value":"Coffee & curiosity"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1","label":"Email","value":"hello@subarna.com.np","url":"mailto:hello@subarna.com.np"}],"gallery":[{"id":"gf1","name":"Nepal","emoji":"🏔"},{"id":"gf2","name":"Projects","emoji":"💻"}],"customSections":[],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
 
 function loadState(){try{const r=localStorage.getItem('sb6');return r?Object.assign({},D,JSON.parse(r)):{...D};}catch(e){return{...D};}}
 function save(){localStorage.setItem('sb6',JSON.stringify(state));}
@@ -757,9 +812,12 @@ function renderNav(){
     btn.className='nav-btn'+(activeSec===item.section?' active':'');
     if(visible.length%2!==0&&i===visible.length-1)btn.classList.add('full');
     const canDel=!CORE.includes(item.id)&&item.id!=='settings';
-    btn.innerHTML=`${ic(item.icon)}<span class="nav-lbl">${item.label}</span>${canDel?'<button class="nav-x">✕</button>':''}`;
+    const canEdit=canDel;
+    btn.innerHTML=`${ic(item.icon)}<span class="nav-lbl">${item.label}</span>${canEdit?'<button class="nav-e" title="Edit">✎</button>':''}${canDel?'<button class="nav-x" title="Delete">✕</button>':''}`;
     btn.addEventListener('click',e=>{
-      if(e.target.closest('.nav-x')){state.navItems=state.navItems.filter(n=>n.id!==item.id);save();renderNav();return;}
+      if(e.target.closest('.nav-x')){state.navItems=state.navItems.filter(n=>n.id!==item.id);state.customSections=(state.customSections||[]).filter(s=>s.id!==item.id);save();renderNav();renderCustomSections();if(activeSec===item.section)goTo('home');return;}
+      if(e.target.closest('.nav-e')){openModal('editnav',item.id);return;}
+      if(item.link){window.open(item.link,'_blank','noopener');return;}
       goTo(item.section);closeSidebar();
     });
     g.appendChild(btn);
@@ -951,7 +1009,13 @@ function renderCustomSections(){
   (state.customSections||[]).forEach(s=>{
     const d=document.createElement('div');d.className='page-sec custsec';d.id='section-'+s.id;
     if(activeSec===s.id)d.classList.add('active');
-    d.innerHTML=`<h2 class="gen-title" contenteditable="false">${s.title}</h2><p class="gen-body" contenteditable="false">${s.body}</p>`;
+    let html='';
+    if(s.photo){
+      html+=`<img src="${esc(s.photo)}" alt="" style="width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin-bottom:18px">`;
+    }
+    html+=`<h2 class="gen-title" contenteditable="false">${esc(s.title)}</h2>`;
+    html+=`<div class="gen-body" contenteditable="false">${s.body||''}</div>`;
+    d.innerHTML=html;
     right.appendChild(d);
   });
 }
@@ -1053,17 +1117,79 @@ async function tryLogin(){
 document.getElementById('pw-submit').addEventListener('click',tryLogin);
 document.getElementById('pw-cancel').addEventListener('click',closeLogin);
 
+// ─── EMAIL PASSWORD RECOVERY (EmailJS) ───
+// For security, the plaintext password is NOT stored in JS.
+// The EmailJS template at emailjs.com should contain the password as static text in the body.
+// We only send { to_email, site_name } to EmailJS.
+async function sendPasswordEmail(toEmail){
+  const svc=state.emailjsServiceId, tpl=state.emailjsTemplateId, key=state.emailjsPublicKey;
+  if(!svc||!tpl||!key){
+    return {ok:false, msg:'Email recovery not configured. Owner must set it up in Settings → Password Recovery (Email).'};
+  }
+  if(!window.emailjs){
+    return {ok:false, msg:'EmailJS SDK failed to load. Check your internet connection.'};
+  }
+  try{
+    if(!window._ejs_init){
+      emailjs.init({publicKey:key});
+      window._ejs_init=true;
+    }
+    await emailjs.send(svc,tpl,{
+      to_email:toEmail,
+      site_name:state.pageTitle||state.profileName||'your site'
+    });
+    return {ok:true, msg:'✅ Email sent to '+toEmail+'. Check your inbox (and spam folder).'};
+  }catch(e){
+    console.error('EmailJS error:',e);
+    return {ok:false, msg:'❌ Failed: '+(e?.text||e?.message||'unknown error')};
+  }
+}
+// Email recovery submit on login screen
+document.getElementById('email-rec-submit').addEventListener('click',async()=>{
+  const inp=document.getElementById('email-rec-inp');
+  const errEl=document.getElementById('email-rec-err');
+  const statusEl=document.getElementById('email-rec-status');
+  const btn=document.getElementById('email-rec-submit');
+  const val=inp.value.trim().toLowerCase();
+  errEl.classList.remove('show');
+  statusEl.textContent='';
+  if(!val){inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),400);return;}
+  if(val!==(state.recoveryEmail||'').toLowerCase()){
+    errEl.classList.add('show');
+    inp.classList.add('shake');
+    setTimeout(()=>inp.classList.remove('shake'),400);
+    return;
+  }
+  btn.disabled=true; btn.textContent='Sending...';
+  const r=await sendPasswordEmail(val);
+  btn.disabled=false; btn.textContent='Send password to my email →';
+  statusEl.textContent=r.msg;
+  statusEl.style.color=r.ok?'var(--teal)':'#e64949';
+});
+document.getElementById('email-rec-inp').addEventListener('keydown',e=>{
+  if(e.key==='Enter')document.getElementById('email-rec-submit').click();
+});
+
 // ─── FORGOT PASSWORD FLOW ───
 document.getElementById('pw-forgot').addEventListener('click',()=>{
   document.getElementById('login-card').classList.add('hide');
   document.getElementById('forgot-card').classList.add('open');
-  setTimeout(()=>document.getElementById('recovery-inp').focus(),80);
+  const emailInp=document.getElementById('email-rec-inp');
+  if(emailInp)emailInp.value=state.recoveryEmail||'';
+  setTimeout(()=>{
+    if(emailInp && !state.recoveryEmail)emailInp.focus();
+    else document.getElementById('recovery-inp').focus();
+  },80);
 });
 document.getElementById('recovery-back').addEventListener('click',()=>{
   document.getElementById('forgot-card').classList.remove('open');
   document.getElementById('login-card').classList.remove('hide');
   document.getElementById('recovery-err').classList.remove('show');
   document.getElementById('recovery-inp').value='';
+  const erEl=document.getElementById('email-rec-err');
+  const esEl=document.getElementById('email-rec-status');
+  if(erEl)erEl.classList.remove('show');
+  if(esEl)esEl.textContent='';
 });
 document.getElementById('recovery-submit').addEventListener('click',async()=>{
   const val=document.getElementById('recovery-inp').value.trim();
@@ -1174,7 +1300,14 @@ function exitEdit(){
   document.querySelectorAll('[contenteditable]').forEach(e=>e.contentEditable='false');
   if(activeSec==='settings')goTo('home');
   renderNav();render();updateAdminBar();
-  toast('All changes saved ✓');
+  // Auto-publish to GitHub if configured (silent mode — no button label updates)
+  const g=JSON.parse(localStorage.getItem('sb_gh')||'{}');
+  if(g.token&&g.repo){
+    toast('Saving & publishing...');
+    publishToGitHub(true).catch(e=>console.error('Auto-publish error:',e));
+  }else{
+    toast('All changes saved ✓ (configure GitHub in Settings to publish live)');
+  }
 }
 
 // old FAB no longer needed but keep listener safe
@@ -1220,23 +1353,76 @@ function openModal(type,id){
   const title=document.getElementById('modal-title');
   const body=document.getElementById('modal-body');
   bg.classList.add('open');
-  if(type==='addnav'){
-    title.textContent='Add page';
+  if(type==='addnav'||type==='editnav'){
+    const isE=type==='editnav';
+    const nav=isE?state.navItems.find(n=>n.id===id):null;
+    const cs=isE?(state.customSections||[]).find(s=>s.id===id):null;
+    title.textContent=isE?'Edit page':'Add page';
+    const ICONS=[['page','Page'],['folder','Folder'],['star','Star'],['globe','Globe'],['user','Person'],['mail','Mail'],['image','Photo']];
     body.innerHTML=`
-      <div class="form-group"><label class="form-lbl">Page name</label><input class="form-inp" id="mi-label" placeholder="Blog, Resume..."></div>
+      <div class="form-group"><label class="form-lbl">Page name</label><input class="form-inp" id="mi-label" value="${isE?esc(nav.label):''}" placeholder="Blog, Resume..."></div>
       <div class="form-group"><label class="form-lbl">Icon</label>
         <select class="form-inp" id="mi-icon">
-          <option value="page">Page</option><option value="folder">Folder</option>
-          <option value="star">Star</option><option value="globe">Globe</option>
-          <option value="user">Person</option><option value="mail">Mail</option>
-        </select></div>`;
+          ${ICONS.map(o=>`<option value="${o[0]}" ${isE&&nav.icon===o[0]?'selected':''}>${o[1]}</option>`).join('')}
+        </select></div>
+      <div class="form-group"><label class="form-lbl">Photo (optional hero image)</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="file" id="mi-photo-file" accept="image/*" style="display:none">
+          <button class="s-btn s-btn-o" type="button" id="mi-photo-btn" style="flex:0 0 auto">Choose image</button>
+          <span id="mi-photo-name" style="font-size:12px;color:var(--text3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${isE&&cs&&cs.photo?'✓ Image set':'No image chosen'}</span>
+        </div>
+        <input class="form-inp" id="mi-photo" type="hidden" value="${isE&&cs?esc(cs.photo||''):''}">
+        ${isE&&cs&&cs.photo?`<div style="margin-top:6px"><img src="${esc(cs.photo)}" style="max-width:100%;max-height:80px;border-radius:6px;object-fit:cover"></div><button class="s-btn s-btn-d" type="button" id="mi-photo-clear" style="margin-top:5px;font-size:11px;padding:5px 10px">Remove image</button>`:''}
+      </div>
+      <div class="form-group"><label class="form-lbl">External link (optional — if set, clicking the nav button opens this URL instead of a page)</label><input class="form-inp" id="mi-link" value="${isE&&nav?esc(nav.link||''):''}" placeholder="https://... or mailto:..."></div>
+      <div class="form-group"><label class="form-lbl">Page content (shown when the nav item is clicked — supports basic HTML)</label><textarea class="form-inp" id="mi-body" rows="5" style="resize:vertical;font-family:inherit">${isE&&cs?esc(cs.body||''):'Write your content here...'}</textarea></div>`;
+    // Photo upload handler
+    const photoFile=document.getElementById('mi-photo-file');
+    const photoBtn=document.getElementById('mi-photo-btn');
+    const photoName=document.getElementById('mi-photo-name');
+    const photoInput=document.getElementById('mi-photo');
+    photoBtn.addEventListener('click',()=>photoFile.click());
+    photoFile.addEventListener('change',e=>{
+      const f=e.target.files[0];if(!f)return;
+      if(f.size>2*1024*1024){toast('⚠ Image too large — max 2MB');return;}
+      const r=new FileReader();
+      r.onload=()=>{
+        photoInput.value=r.result;
+        photoName.textContent='✓ '+f.name;
+      };
+      r.readAsDataURL(f);
+    });
+    const clearBtn=document.getElementById('mi-photo-clear');
+    if(clearBtn){clearBtn.addEventListener('click',()=>{
+      photoInput.value='';
+      photoName.textContent='No image chosen';
+      // Remove the preview + button
+      const grp=clearBtn.parentElement;
+      const img=grp.querySelector('img');
+      if(img)img.remove();
+      clearBtn.remove();
+    });}
     mCb=()=>{
       const lbl=document.getElementById('mi-label').value.trim();if(!lbl)return false;
-      const nid='c'+Date.now();
-      state.navItems.push({id:nid,label:lbl,section:nid,icon:document.getElementById('mi-icon').value});
-      if(!state.customSections)state.customSections=[];
-      state.customSections.push({id:nid,title:lbl,body:'Write your content here...'});
-      save();renderNav();renderCustomSections();goTo(nid);
+      const icon=document.getElementById('mi-icon').value;
+      const link=document.getElementById('mi-link').value.trim();
+      const photo=document.getElementById('mi-photo').value.trim();
+      const bodyVal=document.getElementById('mi-body').value;
+      if(isE){
+        if(nav){nav.label=lbl;nav.icon=icon;if(link)nav.link=link;else delete nav.link;}
+        if(cs){cs.title=lbl;cs.body=bodyVal;if(photo)cs.photo=photo;else delete cs.photo;}
+      }else{
+        const nid='c'+Date.now();
+        const newItem={id:nid,label:lbl,section:nid,icon};
+        if(link)newItem.link=link;
+        state.navItems.push(newItem);
+        if(!state.customSections)state.customSections=[];
+        const newSec={id:nid,title:lbl,body:bodyVal};
+        if(photo)newSec.photo=photo;
+        state.customSections.push(newSec);
+        goTo(nid);
+      }
+      save();renderNav();renderCustomSections();
     };
   }
   else if(type==='addlink'){
@@ -1355,6 +1541,10 @@ function syncSettings(){loadGHSettings();
   if(f('set-handle').value!==undefined)f('set-handle').value=state.handle||'';
   if(f('set-title').value!==undefined)f('set-title').value=state.pageTitle||'';
   if(f('set-h1em').value!==undefined)f('set-h1em').value=state.h1em||'';
+  if(f('set-rec-email').value!==undefined)f('set-rec-email').value=state.recoveryEmail||'';
+  if(f('set-ejs-svc').value!==undefined)f('set-ejs-svc').value=state.emailjsServiceId||'';
+  if(f('set-ejs-tpl').value!==undefined)f('set-ejs-tpl').value=state.emailjsTemplateId||'';
+  if(f('set-ejs-key').value!==undefined)f('set-ejs-key').value=state.emailjsPublicKey||'';
 }
 document.getElementById('set-save-id').addEventListener('click',()=>{
   state.profileName=document.getElementById('set-name').value.trim()||state.profileName;
@@ -1424,6 +1614,31 @@ document.getElementById('gh-save-settings').addEventListener('click',()=>{
   toast('GitHub settings saved ✓');
 });
 
+// ─── PASSWORD RECOVERY (EMAIL) SETTINGS HANDLERS ───
+document.getElementById('set-save-rec').addEventListener('click',()=>{
+  state.recoveryEmail=document.getElementById('set-rec-email').value.trim();
+  state.emailjsServiceId=document.getElementById('set-ejs-svc').value.trim();
+  state.emailjsTemplateId=document.getElementById('set-ejs-tpl').value.trim();
+  state.emailjsPublicKey=document.getElementById('set-ejs-key').value.trim();
+  save();
+  const s=document.getElementById('rec-status');
+  s.style.display='block'; s.style.color='var(--teal)';
+  s.textContent='✅ Saved. Click Publish to push to GitHub so other devices get these settings.';
+});
+document.getElementById('set-test-rec').addEventListener('click',async()=>{
+  // Save current form values first so the test uses them
+  state.recoveryEmail=document.getElementById('set-rec-email').value.trim();
+  state.emailjsServiceId=document.getElementById('set-ejs-svc').value.trim();
+  state.emailjsTemplateId=document.getElementById('set-ejs-tpl').value.trim();
+  state.emailjsPublicKey=document.getElementById('set-ejs-key').value.trim();
+  const s=document.getElementById('rec-status');
+  s.style.display='block'; s.style.color='var(--text3)';
+  s.textContent='Sending test email to '+state.recoveryEmail+'...';
+  const r=await sendPasswordEmail(state.recoveryEmail);
+  s.style.color=r.ok?'var(--teal)':'#e64949';
+  s.textContent=r.msg;
+});
+
 document.getElementById('gh-test').addEventListener('click',async()=>{
   const g=JSON.parse(localStorage.getItem('sb_gh')||'{}');
   const status=document.getElementById('gh-status');
@@ -1483,18 +1698,16 @@ function bakeStateIntoHTML(){
 }
 
 // Main publish function
-async function publishToGitHub(){
+async function publishToGitHub(silent){
   const g=JSON.parse(localStorage.getItem('sb_gh')||'{}');
   if(!g.token||!g.repo){
-    // No GitHub configured — offer download instead
-    downloadIndexHTML();
-    toast('📥 Downloaded! Upload index.html to GitHub manually.');
-    return;
+    // No GitHub configured — offer download instead (only if not silent)
+    if(!silent){downloadIndexHTML();toast('📥 Downloaded! Upload index.html to GitHub manually.');}
+    return {ok:false, reason:'not-configured'};
   }
   const btn=document.getElementById('ab-publish-btn');
   const lbl=document.getElementById('ab-publish-label');
-  btn.disabled=true;
-  lbl.textContent='Publishing...';
+  if(!silent){btn.disabled=true; lbl.textContent='Publishing...';}
 
   try{
     // First collect any pending edits
@@ -1509,8 +1722,16 @@ async function publishToGitHub(){
       {headers:{Authorization:`token ${g.token}`,Accept:'application/vnd.github.v3+json'}}
     );
 
-    if(getRes.status===401){lbl.textContent='Publish';btn.disabled=false;toast('❌ GitHub token expired — update in Settings');return;}
-    if(getRes.status===404){lbl.textContent='Publish';btn.disabled=false;toast('❌ Repo or file not found — check Settings');return;}
+    if(getRes.status===401){
+      if(!silent){lbl.textContent='Publish';btn.disabled=false;}
+      toast('❌ GitHub token expired — update in Settings');
+      return {ok:false, reason:'token-expired'};
+    }
+    if(getRes.status===404){
+      if(!silent){lbl.textContent='Publish';btn.disabled=false;}
+      toast('❌ Repo or file not found — check Settings');
+      return {ok:false, reason:'not-found'};
+    }
 
     const fileData=await getRes.json();
     const sha=fileData.sha;
@@ -1538,20 +1759,27 @@ async function publishToGitHub(){
     );
 
     if(putRes.ok){
-      lbl.textContent='Published ✓';
-      setTimeout(()=>{lbl.textContent='Publish';btn.disabled=false;},3000);
-      toast('🚀 Published! All devices update in ~2 minutes');
+      if(!silent){
+        lbl.textContent='Published ✓';
+        setTimeout(()=>{lbl.textContent='Publish';btn.disabled=false;},3000);
+        toast('🚀 Published! All devices update in ~2 minutes');
+      }else{
+        toast('✓ Saved & published — all devices will see it shortly');
+      }
       // Also save to localStorage
       save();
+      return {ok:true};
     }else{
       const err=await putRes.json();
-      lbl.textContent='Publish';btn.disabled=false;
+      if(!silent){lbl.textContent='Publish';btn.disabled=false;}
       toast('❌ Publish failed: '+(err.message||putRes.status));
+      return {ok:false, reason:'api-error', error:err};
     }
   }catch(e){
-    lbl.textContent='Publish';btn.disabled=false;
+    if(!silent){lbl.textContent='Publish';btn.disabled=false;}
     toast('❌ Network error — check connection');
     console.error(e);
+    return {ok:false, reason:'network'};
   }
 }
 
