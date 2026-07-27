@@ -1663,9 +1663,22 @@ function openModal(type,id){
           try{
             const u=new URL(url);
             const host=u.hostname.replace(/^www\./,'');
-            // Take the main domain name, capitalize first letter
             const parts=host.split('.');
-            const main=parts.length>=2?parts[parts.length-2]:parts[0];
+            // Use the most meaningful part of the domain:
+            // - For subdomains like scholar.google.com, use the subdomain (scholar)
+            // - For two-part domains like example.com, use the second-to-last part (example)
+            // - For three+ part domains, prefer the most specific non-common part
+            const commonParts=new Set(['com','org','net','io','edu','gov','ac','co']);
+            let main='';
+            if(parts.length>=3){
+              // e.g. scholar.google.com → prefer 'scholar'
+              main=parts[0];
+            }else if(parts.length===2){
+              // e.g. example.com → use 'example'
+              main=parts[0];
+            }else{
+              main=parts[parts.length-2]||parts[0];
+            }
             label=main.charAt(0).toUpperCase()+main.slice(1);
           }catch(e){label='Site';}
         }
