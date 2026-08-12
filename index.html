@@ -788,6 +788,11 @@ function loadState(){
     }
     // Also ensure sites array exists (for older stored states without it)
     if(!merged.sites)merged.sites=D.sites||[];
+    // CRITICAL: If stored sites is empty but defaults have sites, use defaults
+    // (prevents stale empty localStorage from hiding new default sites)
+    if(Array.isArray(merged.sites)&&merged.sites.length===0&&D.sites&&D.sites.length>0){
+      merged.sites=D.sites;
+    }
     return merged;
   }catch(e){return{...D};}
 }
