@@ -396,7 +396,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
       <input class="login-inp" type="text" id="pw-inp" placeholder="Enter your password" autocomplete="current-password">
       <button class="login-eye" id="pw-eye" tabindex="-1">🙈</button>
     </div>
-    <div class="login-err show" id="pw-err">Incorrect password — try again</div>
+    <div class="login-err" id="pw-err">Incorrect password — try again</div>
     <button class="login-submit" id="pw-submit">Sign in →</button>
     <button class="login-back" id="pw-cancel">← Back to site</button>
     <div style="margin-top:16px;border-top:1px solid var(--divider);padding-top:14px">
@@ -455,7 +455,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
         <span id="ab-publish-label">Publish</span>
       </button>
-      <button class="ab-btn ab-btn-settings active" id="ab-settings-btn">
+      <button class="ab-btn ab-btn-settings" id="ab-settings-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         Settings
       </button>
@@ -470,12 +470,24 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 <!-- ITEM MODAL -->
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
-    <div class="modal-title" id="modal-title">Add site</div>
+    <div class="modal-title" id="modal-title">Edit page</div>
     <div id="modal-body">
-      <div class="form-group"><label class="form-lbl">Site name</label><input class="form-inp" id="mi-lbl" value="" placeholder="Google Scholar, ResearchGate..."></div>
-      <div class="form-group"><label class="form-lbl">URL</label><input class="form-inp" id="mi-url" type="url" value="" placeholder="https://..."></div>
-      <div class="form-group"><label class="form-lbl">Description (optional)</label><input class="form-inp" id="mi-desc" value="" placeholder="What this site is for..."></div>
-      <div class="form-group"><label class="form-lbl">Emoji icon (optional — overrides auto favicon)</label><input class="form-inp" id="mi-emoji" value="" placeholder="📚 🔬 🎓 (leave empty to auto-fetch site favicon)" maxlength="4"></div></div>
+      <div class="form-group"><label class="form-lbl">Page name</label><input class="form-inp" id="mi-label" value="Resources" placeholder="Blog, Resume..."></div>
+      <div class="form-group"><label class="form-lbl">Icon</label>
+        <select class="form-inp" id="mi-icon">
+          <option value="page">Page</option><option value="folder" selected="">Folder</option><option value="star">Star</option><option value="globe">Globe</option><option value="user">Person</option><option value="mail">Mail</option><option value="image">Photo</option>
+        </select></div>
+      <div class="form-group"><label class="form-lbl">Photo (optional hero image)</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="file" id="mi-photo-file" accept="image/*" style="display:none">
+          <button class="s-btn s-btn-o" type="button" id="mi-photo-btn" style="flex:0 0 auto">Choose image</button>
+          <span id="mi-photo-name" style="font-size:12px;color:var(--text3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">No image chosen</span>
+        </div>
+        <input class="form-inp" id="mi-photo" type="hidden" value="">
+        <div style="margin-top:6px"></div>
+      </div>
+      <div class="form-group"><label class="form-lbl">External link (optional — if set, clicking the nav button opens this URL instead of a page)</label><input class="form-inp" id="mi-link" value="" placeholder="https://... or mailto:..."></div>
+      <div class="form-group"><label class="form-lbl">Page content (shown when the nav item is clicked — supports basic HTML)</label><textarea class="form-inp" id="mi-body" rows="5" style="resize:vertical;font-family:inherit">Write your content here...</textarea></div></div>
     <div class="modal-actions">
       <button class="m-cancel" id="modal-cancel">Cancel</button>
       <button class="m-save" id="modal-save">Save</button>
@@ -504,7 +516,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   <div class="tb-right">
     <div class="clock-pill">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-      <span id="el-clock">8:21 PM</span>
+      <span id="el-clock">8:36 PM</span>
     </div>
     <button class="ico-btn" id="btn-dark" title="Toggle dark mode">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path><circle cx="19" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="22" cy="9" r=".7" fill="currentColor" stroke="none"></circle><circle cx="17" cy="2" r=".7" fill="currentColor" stroke="none"></circle></svg>
@@ -515,7 +527,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
 <div class="layout">
 <!-- LEFT SIDEBAR -->
 <div class="left" id="left-sidebar">
-  <div class="nav-grid" id="nav-grid"><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><span class="nav-lbl">Home</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span class="nav-lbl">Projects</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span class="nav-lbl">Gallery</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span class="nav-lbl">Sites</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="nav-lbl">About</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,4 12,13 2,4"></polyline></svg><span class="nav-lbl">Contact</span></button><div class="add-nav-wrap"><button class="add-nav-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add page</button></div></div>
+  <div class="nav-grid" id="nav-grid"><button class="nav-btn active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><span class="nav-lbl">Home</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span class="nav-lbl">Projects</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span class="nav-lbl">Gallery</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span class="nav-lbl">Sites</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="nav-lbl">About</span></button><button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,4 12,13 2,4"></polyline></svg><span class="nav-lbl">Contact</span></button><button class="nav-btn full"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span class="nav-lbl">Resources</span><button class="nav-e" title="Edit">✎</button><button class="nav-x" title="Delete">✕</button></button><div class="add-nav-wrap"><button class="add-nav-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add page</button></div></div>
   <div style="margin-bottom:14px">
     <div class="sec-lbl">Status</div>
     <button class="status-chip s-available" id="status-chip"><span class="sdot"></span><span>Available for work</span></button>
@@ -583,7 +595,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
     </div>
     <!-- Folder view -->
     <div id="gallery-folders-view">
-      <div class="folder-grid" id="folder-grid"><div class="folder-card"><div class="folder-icon">👽</div><div class="folder-name">👽👽</div><div class="folder-count">2 photos</div><button class="folder-del">✕</button></div></div>
+      <div class="folder-grid" id="folder-grid"></div>
       <button class="add-row-btn" id="btn-add-folder">+ New folder</button>
     </div>
     <!-- Photo view -->
@@ -805,7 +817,7 @@ body.dark .toast{background:#e5e2dc;color:#1c1917}
   </div>
 
   <!-- Custom pages here -->
-<div class="page-sec custsec" id="section-c1781754819677"><h2 class="gen-title" contenteditable="false">google scholer</h2><div class="gen-body" contenteditable="false">Write your content here...</div></div></div>
+<div class="page-sec custsec" id="section-c1781754819677"><h2 class="gen-title" contenteditable="false">google scholer</h2><div class="gen-body" contenteditable="false">Write your content here...</div></div><div class="page-sec custsec" id="section-c1789397183167"><h2 class="gen-title" contenteditable="false">Resources</h2><div class="gen-body" contenteditable="false">Write your content here...</div></div></div>
 </div>
 
 <button class="edit-fab" id="edit-fab" title="Save changes">✓</button>
@@ -832,7 +844,7 @@ const IC={
 const ic=n=>IC[n]||IC.page;
 
 // ═══ DEFAULT STATE ═══
-const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing Insights","h1em":"","h1b":".","sub":"Floating in the Quantum World ♥️Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology.Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year partnership ex(X)😄","s2n":"3 +","s2l":"years experience in Tech-field","s3n":"∞","s3l":"pursuing goal","aboutBody":"I spend my time trying to understand the world, and the world spends its time confusing me back. Nepali, learning one mystery at a time.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"sites","label":"Sites","section":"sites","icon":"globe"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"}],"links":[{"id":"l1780022177681","label":"Facebook","icon":"globe","url":"https://www.facebook.com/SubarnaZen/"},{"id":"l1780033977369","label":"twitter.com","icon":"globe","url":"https://x.com/subarnazen"},{"id":"l1780034072136","label":"Linkedin","icon":"globe","url":"https://www.linkedin.com/in/subarnazen/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Buiding the ............","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1780021783371","label":"Subarnazen@gmail.com","value":"","url":"#"}],"gallery":[{"id":"gf1780021858866","name":"👽👽","emoji":"👽"}],"customSections":[{"id":"c1781754819677","title":"google scholer","body":"Write your content here..."}],"sites":[{"id":"s1","label":"Scholar","url":"https://scholar.google.com/","desc":"My academic publications & citations"},{"id":"s2","label":"Researchgate","url":"https://www.researchgate.net/","desc":"Research profile, papers, and Q&A"},{"id":"s3","label":"arXiv","url":"https://arxiv.org/","desc":"Preprints in physics, math, and CS"},{"id":"s4","label":"ORCID","url":"https://orcid.org/","desc":"Persistent digital researcher identifier","emoji":"🎓"},{"id":"s5","label":"GitHub","url":"https://github.com/SubarnaZen","desc":"My code repositories & projects"},{"id":"s6","label":"PubMed","url":"https://www.ncbi.nlm.nih.gov/pubmed/","desc":"Biomedical literature database"},{"id":"s1789396235146","label":"OAmg","url":"https://oa.mg/","desc":""}],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
+const D=/*STATE_START*/{"profileName":"Subarna","handle":"@subarna","photo":"","pageTitle":"subarna.com.np","h1a":"Exploring Knowledge, Sharing Insights","h1em":"","h1b":".","sub":"Floating in the Quantum World ♥️Physics + Physique = Life ❄️","body":"Currently learning, building, and exploring the fascinating worlds of physics, research, and technology.Driven by curiosity today, guided by ambition for tomorrow..","bar":"Learning and understanding the universe through curiosity, experiments, and theoretical ideas.","s1n":"2.5+","s1l":"Year partnership ex(X)😄","s2n":"3 +","s2l":"years experience in Tech-field","s3n":"∞","s3l":"pursuing goal","aboutBody":"I spend my time trying to understand the world, and the world spends its time confusing me back. Nepali, learning one mystery at a time.","statusType":"available","statusLabel":"Available for work","dark":false,"skills":["HTML","Python","DFT","Quantum Expresso","flirting","joking"],"navItems":[{"id":"home","label":"Home","section":"home","icon":"home"},{"id":"projects","label":"Projects","section":"projects","icon":"folder"},{"id":"gallery","label":"Gallery","section":"gallery","icon":"image"},{"id":"sites","label":"Sites","section":"sites","icon":"globe"},{"id":"about","label":"About","section":"about","icon":"user"},{"id":"contact","label":"Contact","section":"contact","icon":"mail"},{"id":"c1789397183167","label":"Resources","section":"c1789397183167","icon":"folder"}],"links":[{"id":"l1780022177681","label":"Facebook","icon":"globe","url":"https://www.facebook.com/SubarnaZen/"},{"id":"l1780033977369","label":"twitter.com","icon":"globe","url":"https://x.com/subarnazen"},{"id":"l1780034072136","label":"Linkedin","icon":"globe","url":"https://www.linkedin.com/in/subarnazen/"}],"projects":[{"id":"p1","name":"Quarkcode Technology","desc":"Buiding the ............","badges":[{"t":"Active","c":"bg2"}],"url":"#"}],"funFacts":[{"id":"f1","icon":"🌏","title":"Location","value":"Kathmandu, Nepal"},{"id":"f2","icon":"⚡","title":"Availability","value":"Open to projects"},{"id":"f4","icon":"🎯","title":"Focus","value":"Building in public"}],"contacts":[{"id":"c1780021783371","label":"Subarnazen@gmail.com","value":"","url":"#"}],"gallery":[{"id":"gf1780021858866","name":"👽👽","emoji":"👽"}],"customSections":[{"id":"c1781754819677","title":"google scholer","body":"Write your content here..."},{"id":"c1789397183167","title":"Resources","body":"Write your content here..."}],"sites":[{"id":"s1","label":"Scholar","url":"https://scholar.google.com/","desc":"My academic publications & citations"},{"id":"s2","label":"Researchgate","url":"https://www.researchgate.net/","desc":"Research profile, papers, and Q&A"},{"id":"s3","label":"arXiv","url":"https://arxiv.org/","desc":"Preprints in physics, math, and CS"},{"id":"s4","label":"ORCID","url":"https://orcid.org/","desc":"Persistent digital researcher identifier","emoji":"🎓"},{"id":"s5","label":"GitHub","url":"https://github.com/SubarnaZen","desc":"My code repositories & projects"},{"id":"s6","label":"PubMed","url":"https://www.ncbi.nlm.nih.gov/pubmed/","desc":"Biomedical literature database"},{"id":"s1789396235146","label":"OAmg","url":"https://oa.mg/","desc":""}],"recoveryEmail":"subarnazen@gmail.com","emailjsServiceId":"","emailjsTemplateId":"","emailjsPublicKey":""}/*STATE_END*/;
 
 function loadState(){
   try{
